@@ -1,12 +1,30 @@
 # LLVM Pass for Call Graph Analysis
 
 This is an example of how to implement an LLVM pass that generates YAML-formatted call
-graphs from C/C++ source code.
+graphs for C/C++ application.
+
+Verified with homebrew clang 20 on Mac and clang 18 on Ubuntu 24.04
+
+It comes down to executing a custom llvm pass on intermediate llvm bitcode.
+If you had an intermediate bitcode produced via
+```shell
+clang -S -emit-llvm your.c -o your.ll
+```
+Then
+```shell
+opt -load-pass-plugin=libYAMLCallGraphPass.dylib -passes="yaml-callgraph" -yaml-callgraph-output="your.callgraph.yaml" your.ll
+```
+will produce the callgraph for it.
+
+If you want to build a callgraph for many modules or entire application, then `llvm-link` step has to be used to
+link all *.ll bitcode modules into one large *.ll file.
+
 
 # Requirements
 
 ### Mac
 
+Install XCode with command line tools and `brew`, then
 ```shell
 brew install cmake llvm
 ```
