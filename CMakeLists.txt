@@ -43,13 +43,6 @@ include_directories(${LLVM_INCLUDE_DIRS})
 
 # Link against LLVM libraries
 llvm_map_components_to_libnames(llvm_libs
-        Core
-        Support
-        Analysis
-        TransformUtils
-        ScalarOpts
-        InstCombine
-        AggressiveInstCombine
         Passes
 )
 
