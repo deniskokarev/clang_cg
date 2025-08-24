@@ -3,6 +3,20 @@
 This is an example of how to implement an LLVM pass that generates YAML-formatted call
 graphs from C/C++ source code.
 
+# Requirements
+
+### Mac
+
+```shell
+brew install cmake llvm
+```
+
+### Ubuntu
+
+```shell
+sudo apt install cmake build-essential libzstd-dev llvm clang
+```
+
 # Build / Test
 
 Make sure you have `clang` installed. If you're on Mac, the XCode will not contain all
