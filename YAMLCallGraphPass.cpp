@@ -126,6 +126,12 @@ llvmGetPassPluginInfo() {
     return {
         LLVM_PLUGIN_API_VERSION, "YAMLCallGraphPass", LLVM_VERSION_STRING,
         [](PassBuilder &PB) {
+            // Register required analyses
+            PB.registerAnalysisRegistrationCallback(
+                [](ModuleAnalysisManager &MAM) {
+                    MAM.registerPass([&] { return CallGraphAnalysis(); });
+                }
+            );
             PB.registerPipelineParsingCallback(
                 [](StringRef Name, ModulePassManager &MPM,
                    ArrayRef<PassBuilder::PipelineElement>) {
