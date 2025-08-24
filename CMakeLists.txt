@@ -40,17 +40,11 @@ message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(${LLVM_INCLUDE_DIRS})
 
-# Link against LLVM libraries
-llvm_map_components_to_libnames(llvm_libs
-        Passes
-)
-
 # Now build our plugin
 add_library(YAMLCallGraphPass SHARED
         YAMLCallGraphPass.cpp)
 
-# Link against LLVM
-target_link_libraries(YAMLCallGraphPass ${llvm_libs})
+llvm_config(YAMLCallGraphPass USE_SHARED Passes)
 
 # Add test subdirectory
 add_subdirectory(test)
