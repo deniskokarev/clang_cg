@@ -35,7 +35,6 @@ if (NOT LLVM_FOUND)
 endif ()
 
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
 # Add LLVM definitions and include directories
 add_definitions(${LLVM_DEFINITIONS})
@@ -52,19 +51,6 @@ add_library(YAMLCallGraphPass SHARED
 
 # Link against LLVM
 target_link_libraries(YAMLCallGraphPass ${llvm_libs})
-
-# LLVM is (typically) built with no C++ RTTI. We need to match that.
-if (NOT LLVM_ENABLE_RTTI)
-    target_compile_options(YAMLCallGraphPass PRIVATE -fno-rtti)
-endif ()
-
-# Get proper shared-library behavior (where symbols are not necessarily
-# resolved when the shared library is linked) on OS X.
-if (APPLE)
-    set_target_properties(YAMLCallGraphPass PROPERTIES
-            LINK_FLAGS "-undefined dynamic_lookup"
-    )
-endif (APPLE)
 
 # Add test subdirectory
 add_subdirectory(test)
